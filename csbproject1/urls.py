@@ -26,7 +26,7 @@ def testview(request):
 urlpatterns = [
     path("", testview),
     # include() allows referencing other URLconfs
-    path("broken/", include("brokenapp.urls")),
+    path("brokenapp/", include("brokenapp.urls")),
     # path() is passed 4 args. 2 required: route and view;
     # 2 optional: kwargs and name.
     # view: when django finds a matching pattern, it calls the specified
