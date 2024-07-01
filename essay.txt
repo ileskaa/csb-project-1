@@ -1,0 +1,15 @@
+LINK: https://github.com/ileskaa/csb-project-1
+To set up the project, please refer to the instructions in the repository's README.
+Run
+sqlite3 db.sqlite3 < dump.sql
+to set up the database.
+
+FLAW 1: Broken Access Control
+
+FLAW 2: Cross-Site Request Forgery
+
+FLAW 3:
+
+FLAW 4:
+
+FLAW 5:
