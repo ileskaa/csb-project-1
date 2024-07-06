@@ -5,6 +5,7 @@ sqlite3 db.sqlite3 < dump.sql
 to set up the database.
 
 FLAW 1: Broken Access Control
+The admin panel can currently easily be accessed by some unintended users. By going to the admin page at the URL brokenapp/admin, a user can access the admin console simply by using "admin" as both username and password. This is definitely unsafe.
 
 FLAW 2: Cross-Site Request Forgery
 
