@@ -4,10 +4,25 @@ Run
 sqlite3 db.sqlite3 < dump.sql
 to set up the database.
 
-FLAW 1: Broken Access Control
-The admin panel can currently easily be accessed by some unintended users. By going to the admin page at the URL brokenapp/admin, a user can access the admin console simply by using "admin" as both username and password. This is definitely unsafe.
 
-FLAW 2: Cross-Site Request Forgery
+FLAW 1: Broken Access Control
+The admin site can currently easily be accessed by some unintended users. If you're running the app on the default port, you can access the admin site at http://localhost:8000/admin/. A superuser has been created with an unsafe username/password combination. As it stands, the admin page can be accessed by simply using "admin" as both username and password. Please try it out!
+We can probably agree that this is broken access control. Now to fix this issue, the first step is to delete this unsafe admin account. To do so, enter the django shell by using
+python manage.py shell
+and then from the shell run the following commands:
+from django.contrib.auth.models import User
+User.objects.get(username="admin", is_superuser=True).delete()
+
+Now, to verify that the user has been deleted, run the following from the django shell:
+User.objects.filter(is_superuser=True)
+If the returned QuerySet is empty, or if it at least doesn't contain any user named "admin", it means the broken superuser account was successfully deleted.
+
+Now, to create a new admin, exit the Django shell using ctrl+z, and then, at the root directory of this project, run
+python manage.py createsuperuser
+then enter a username of your choice. The email address prompt can be left empty. And when asked for a password, enter one that is at least 8 characters long. It should also be different from the username, and common passwords like "12345678" should not be used. After that, your new superuser will be created. And this time, the admin site should be way harder to access by any undesired person.
+
+
+FLAW 2: Cross-Site Request Forgery (CSRF)
 
 FLAW 3:
 
