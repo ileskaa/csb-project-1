@@ -58,7 +58,7 @@ ROOT_URLCONF = 'csbproject1.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['csbproject1/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
