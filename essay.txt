@@ -23,6 +23,7 @@ then enter a username of your choice. The email address prompt can be left empty
 
 
 FLAW 2: Cross-Site Request Forgery (CSRF)
+CSRF refers to an attack that forces an authenticated user to perform some action on the platform on which he is authenticated.
 
 FLAW 3:
 
