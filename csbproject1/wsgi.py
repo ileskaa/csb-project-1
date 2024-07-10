@@ -1,7 +1,7 @@
 """
 WSGI (Web Server Gateway Interface) config for csbproject1 project.
 
-WSGI is Django's primary deployment platform, and it is the Python standard for web servers and apps.
+WSGI is Django's primary deployment platform, and it is the Python standard for web servers & apps.
 
 This config exposes the WSGI callable as a module-level variable named ``application``.
 
