@@ -13,7 +13,7 @@ from .models import Choice, Question
 # returning an HttpResponse object having the content of the requested page,
 # or raising an exception such as Http404.
 
-# Each genetric view needs to know what model it will be action upon.
+# Each genetric view needs to know what model it will be acting upon.
 # This is provided either by defining the get_queryset() method
 # or by using the model attribute.
 # Generic views documentation:
