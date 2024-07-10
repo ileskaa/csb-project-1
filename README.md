@@ -43,3 +43,5 @@ Must have at leat 5 different flaws from the [OWASP top 10 list](https://owasp.o
 8. Software and data integrity failures
 9. Security logging and monitoring failures
 10. Server-side request forgery
+
+[About CSRF](https://www.cloudflare.com/learning/security/threats/cross-site-request-forgery/)
