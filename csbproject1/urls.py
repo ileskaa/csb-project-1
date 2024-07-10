@@ -16,15 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from django.http import HttpResponse
 
-
-def testview(request):
-    return HttpResponse("Heyaaaa")
+from . import views
 
 
 urlpatterns = [
-    path("", testview),
+    path("", views.testview, name="test"),
     # include() allows referencing other URLconfs
     path("brokenapp/", include("brokenapp.urls")),
     # path() is passed 4 args. 2 required: route and view;

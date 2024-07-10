@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>Index</title>
+    {% load static %}
+    <script type="text/javascript" src="{% static 'csbproject/jquery-3.7.1.min.js' %}"></script>
+    <script>
+      function test() {
+        console.log('test successful')
+      }
+    </script>
+  </head>
+  <body>
+    <p>Heyaaaaa</p>
+    <p>
+      This project contains a simple polling application based on the
+      "Writing your first Django app" tutorial
+    </p>
+    {# Specifying type as button prevents the default behaviour of submitting a form #}
+    <button onclick="test()" type="button">
+      Register
+    </button>
+    <button>Sign In</button>
+  </body>
+</html>
