@@ -52,6 +52,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'csbproject1.urls'
 
+# Documentation for the TEMPLATES setting:
+# https://docs.djangoproject.com/en/5.0/ref/settings/#templates
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
