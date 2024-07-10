@@ -24,14 +24,6 @@ urlpatterns = [
     path("", views.testview, name="test"),
     # include() allows referencing other URLconfs
     path("brokenapp/", include("brokenapp.urls")),
-    # path() is passed 4 args. 2 required: route and view;
-    # 2 optional: kwargs and name.
-    # view: when django finds a matching pattern, it calls the specified
-    # view function with an HttpRequest object as the 1st arg and
-    # any captured values from the route as kwargs.
-    # kwargs: arbitrary keyword args can be passed in ad dictionary
-    # to the target view.
-    # name: naming the URL lets you refer to it unambiguously
-    # from elsewhere in your DJango project
+    # about path(): https://docs.djangoproject.com/en/5.0/ref/urls/#path
     path('admin/', admin.site.urls),
 ]
