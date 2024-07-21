@@ -3,25 +3,35 @@
   <head>
     <meta charset="utf-8" />
     <title>Index</title>
+
     {% load static %}
     <link rel="icon" type="image/png" href="{% static 'csbproject/favicon.ico' %}"/>
     <link rel="stylesheet" href="{% static 'csbproject/style.css' %}">
+
     <script>
-      function test() {
-        console.log('test successful')
+      function showRegistrationForm() {
+        console.log('Wants to register')
+      }
+      function showLoginForm() {
+        console.log('Wants to sign in')
       }
     </script>
   </head>
   <body>
-    <p>Heyaaaaa</p>
+    <p>Heyaaaaa!</p>
     <p>
       This project contains a simple polling application based on the
-      "Writing your first Django app" tutorial
+      "Writing your first Django app" tutorial.
     </p>
+    <p>Get started by clicking one the buttons below.</p>
     {# Specifying type as button prevents the default behaviour of submitting a form #}
-    <button onclick="test()" type="button">
-      Register
-    </button>
-    <button>Sign In</button>
+    <div class="button-wrapper">
+      <button onclick="showRegistrationForm()" type="button">
+        Register
+      </button>
+      <button onclick="showLoginForm()" type="button">
+        Sign In
+      </button>
+    </div>
   </body>
 </html>
