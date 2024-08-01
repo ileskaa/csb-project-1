@@ -2,7 +2,7 @@ from django.urls import path
 
 from . import views
 
-# Add a namespace
+# Namespacing
 app_name = "brokenapp"
 urlpatterns = [
     # as_view() is required for class-based views
