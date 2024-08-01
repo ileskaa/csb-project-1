@@ -21,9 +21,10 @@ from . import views
 
 
 urlpatterns = [
+    # https://docs.djangoproject.com/en/5.0/ref/urls/#path
     path("", views.testview, name="test"),
+    path("register/", views.register, name="register"),
     # include() allows referencing other URLconfs
     path("brokenapp/", include("brokenapp.urls")),
-    # about path(): https://docs.djangoproject.com/en/5.0/ref/urls/#path
     path('admin/', admin.site.urls),
 ]
