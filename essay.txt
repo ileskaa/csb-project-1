@@ -1,29 +1,35 @@
 LINK: https://github.com/ileskaa/csb-project-1
 To set up the project, please refer to the instructions in the repository's README.
-Run
-sqlite3 db.sqlite3 < dump.sql
-to set up the database.
+Please note that the $ sign is used to mark commands that should be run in your terminal, and should not be included as part of the commands.
+
+Now, to set up the database, run
+$ sqlite3 db.sqlite3 < dump.sql
 
 
 FLAW 1: Broken Access Control
 The admin site can currently easily be accessed by some unintended users. If you're running the app on the default port, you can access the admin site at http://localhost:8000/admin/. A superuser has been created with an unsafe username/password combination. As it stands, the admin page can be accessed by simply using "admin" as both username and password. Please try it out!
 We can probably agree that this is broken access control. Now to fix this issue, the first step is to delete this unsafe admin account. To do so, enter the django shell by using
-python manage.py shell
+$ python manage.py shell
 and then from the shell run the following commands:
-from django.contrib.auth.models import User
-User.objects.get(username="admin", is_superuser=True).delete()
+>>> from django.contrib.auth.models import User
+>>> User.objects.get(username="admin", is_superuser=True).delete()
 
 Now, to verify that the user has been deleted, run the following from the django shell:
 User.objects.filter(is_superuser=True)
 If the returned QuerySet is empty, or if it at least doesn't contain any user named "admin", it means the broken superuser account was successfully deleted.
 
 Now, to create a new admin, exit the Django shell using ctrl+z, and then, at the root directory of this project, run
-python manage.py createsuperuser
+$ python manage.py createsuperuser
 then enter a username of your choice. The email address prompt can be left empty. And when asked for a password, enter one that is at least 8 characters long. It should also be different from the username, and common passwords like "12345678" should not be used. After that, your new superuser will be created. And this time, the admin site should be way harder to access by any undesired person.
 
 
 FLAW 2: Cross-Site Request Forgery (CSRF)
 CSRF refers to an attack that forces an authenticated user to perform some action on the platform on which he is authenticated.
+
+To list all users:
+>>> from django.contrib.auth.models import User
+>>> User.objects.all()
+
 
 FLAW 3:
 
