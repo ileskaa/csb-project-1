@@ -13,9 +13,12 @@
       function updateFormTitle(title) {
         const form_title = document.getElementById("form-title");
         form_title.textContent = title
+        showForm()
       }
 
-      function showLoginForm() {
+      function showForm() {
+        const form = document.getElementById('start-form')
+        form.style.visibility = "visible"
         console.log('Wants to sign in')
       }
 
