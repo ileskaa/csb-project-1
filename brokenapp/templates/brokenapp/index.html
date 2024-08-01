@@ -1,13 +1,13 @@
-{% load static %}
+{% extends "brokenapp/base.html" %}
 
-<link rel="stylesheet" href="{% static 'brokenapp/style.css' %}">
-
-{% if latest_question_list %}
+{% block body %}
+  {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
-        <li><a href="{% url 'brokenapp:detail' question.id %}">{{ question.question_text }}</a></li>
+      <li><a href="{% url 'brokenapp:detail' question.id %}">{{ question.question_text }}</a></li>
     {% endfor %}
     </ul>
-{% else %}
+  {% else %}
     <p>No polls are available.</p>
-{% endif %}
+  {% endif %}
+{% endblock %}

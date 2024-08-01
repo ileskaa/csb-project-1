@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <title>Broken App</title>
+
+  {# Below is a tag #}
+  {% load static %}
+  <link rel="icon" type="image/png" href="{% static 'csbproject/favicon.ico' %}"/>
+  <link rel="stylesheet" href="{% static 'brokenapp/style.css' %}">
+</head>
+<body>
+  {% block body %}{% endblock %}
+</body>
+</html>
