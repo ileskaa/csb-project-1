@@ -8,7 +8,6 @@ from django.utils import timezone
 from .models import Choice, Question
 
 
-# Create your views here.
 # All views are responsible for doing one of two things:
 # returning an HttpResponse object having the content of the requested page,
 # or raising an exception such as Http404.
@@ -26,7 +25,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published questions (excluding those set to be
-    published in the future)."""
+        published in the future)."""
         return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
 
 
@@ -81,6 +80,6 @@ def vote(request, question_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse("brokenapp:results", args=(question.id,)))
         # The reverse() function above helps avoid having to harcode a URL in the view func.
-        # It is given the name of the name of the view that we want to pass control to and
+        # It is given the name of the view that we want to pass control to and
         # the variable portion of the URL pattern that points to that view.
-        # So reverse will return a string.
+        # So reverse() will return a string.
