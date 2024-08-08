@@ -1,7 +1,8 @@
+{# We provide a link to our view with the url tag #}
 {# https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#url #}
 <form action="{% url 'brokenapp:vote' question.id %}" method="post">
 {# Template tag to protect against cross-site request forgeries #}
-{% csrf_token %}
+{# {% csrf_token %} #}
 <fieldset>
     <legend><h1>{{ question.question_text }}</h1></legend>
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
