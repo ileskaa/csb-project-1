@@ -20,7 +20,6 @@ button, .submit-btn {
 }
 
 form {
-  visibility: hidden;
   /* Form outline */
   padding: 1em;
   border: 1px solid #ccc;
