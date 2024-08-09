@@ -1,3 +1,5 @@
+## Project setup
+
 If you are running this app for the first time, I recommend you start by creating a virtual environment in a directory of your choice. For example:
 ```console
 python -m venv ~/.virtualenvs/djangodev
@@ -6,7 +8,10 @@ Where the `-m` option is used to execute a specific module.
 If you do not yet have a `~/.virtualenvs` directory, just make sure to create one first.  
 
 Now, activate your virtual environment with
-`source ~/.virtualenvs/djangodev/bin/activate`
+
+```bash
+source ~/.virtualenvs/djangodev/bin/activate
+```
 
 Install the dependencies using `pip install -r requirements.txt`
 
