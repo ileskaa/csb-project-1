@@ -30,6 +30,8 @@ To list all users:
 >>> from django.contrib.auth.models import User
 >>> User.objects.all()
 
+Open: https://ileskaa.github.io/csrf-demo/
+
 
 FLAW 3:
 
