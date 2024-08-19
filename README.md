@@ -33,13 +33,9 @@ https://cybersecuritybase.mooc.fi/module-3.1
 
 The `csbproject1` directory is the actual Python package for the project. You will have to use its name to import anything inside it. E.g., `mysite.urls`
 
-## Projects vs Apps
-
-An app is a web application that does something. E.g., a blog system. A project is a collection of configuration and apps for a particular website. A project can contain contain multiple apps and an app can be in multiple projects.
-
 ## OWASP
 
-Must have at leat 5 different flaws from the [OWASP top 10 list](https://owasp.org/www-project-top-ten/):
+The task was to include at leat 5 different flaws from the [OWASP top 10 list](https://owasp.org/www-project-top-ten/):
 1. Broken access control
 2. Cryptographic failures
 3. Injection
@@ -51,4 +47,4 @@ Must have at leat 5 different flaws from the [OWASP top 10 list](https://owasp.o
 9. Security logging and monitoring failures
 10. Server-side request forgery
 
-[About CSRF](https://www.cloudflare.com/learning/security/threats/cross-site-request-forgery/)
+In addition to these 10 flaws, [cross-site request forgery](https://www.cloudflare.com/learning/security/threats/cross-site-request-forgery/) was also allowed.
