@@ -20,7 +20,7 @@ If the returned QuerySet is empty, or if it at least doesn't contain any user na
 
 Now, to create a new admin, exit the Django shell using ctrl+z, and then, at the root directory of this project, run
 $ python manage.py createsuperuser
-then enter a username of your choice. The email address prompt can be left empty. And when asked for a password, enter one that is at least 8 characters long. It should also be different from the username, and common passwords like "12345678" should not be used. After that, your new superuser will be created. And this time, the admin site should be way harder to access by any undesired person.
+then enter a username of your choice. The email address prompt can be left empty. And when asked for a password, enter one that is at least 8 characters long. It should also be different from the username, and common passwords like "12345678" should not be used. After that, your new superuser will be created. And now, the admin site should be way harder to access by any undesired person.
 
 
 FLAW 2: Cross-Site Request Forgery (CSRF)
@@ -30,10 +30,15 @@ To list all users:
 >>> from django.contrib.auth.models import User
 >>> User.objects.all()
 
-Open: https://ileskaa.github.io/csrf-demo/
+One of the flaws of this app is that it doesn't block CSRF. To test this out, make sure the app is running on port 8000 of your machine, the open a page at
+http://localhost:8000/brokenapp/1/results/. There you should see the vote counts for different answers. On a well-designed app, you should be able to alter these counts only by voting in the app. But here, a malicious actor could actually make you vote by making you click on a click. To test this out, open another tab at
+https://ileskaa.github.io/csrf-demo/. This page presents you a link. If you click it, then go back to http://localhost:8000/brokenapp/1/results/, and refresh the page, you should see that the vote count for "Just hacking" increased by one. That was CSRF in action.
+
+The cause of this flaw can be found at https://github.com/ileskaa/csb-project-1/blob/master/brokenapp/views.py#L60 and thankfully, it is really easy to fix. Juste remove line 60 of brokenapp/views.py.
 
 
-FLAW 3:
+FLAW 3: Cryptographic Failures
+The cryptography used to protect passwords is currently totally broken. In fact, the hashing is non-existent. This sucks. The cause of this flaw can be found here: 
 
 FLAW 4:
 
