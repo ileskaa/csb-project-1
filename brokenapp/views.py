@@ -56,6 +56,7 @@ class ResultsView(generic.DetailView):
     template_name = "brokenapp/results.html"
 
 
+# Remove the next line to block CSRF
 @csrf_exempt
 # urls.py sends a keyword argument called question_id to this view
 def vote(request, question_id):
