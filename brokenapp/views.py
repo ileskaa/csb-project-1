@@ -86,3 +86,32 @@ def vote(request, question_id):
         # It is given the name of the view that we want to pass control to and
         # the variable portion of the URL pattern that points to that view.
         # So reverse() will return a string.
+
+
+def injection(request):
+    return render(request, "brokenapp/form.html")
+
+
+def query(request):
+    query = request.POST['query']
+    # SELECT * FROM brokenapp_choice for ex.
+    # SELECT * FROM brokenapp_choice
+    print(query)
+    try:
+        result = []
+        for c in Choice.objects.raw(query):
+            print(c)
+            result.append(c)
+        # return HttpResponseRedirect(reverse("brokenapp:injection"))
+        return render(
+            request,
+            "brokenapp/form.html",
+            {
+                "result": result
+            }
+        )
+    except TypeError:
+        return render(
+            request,
+            "brokenapp/form.html",
+        )

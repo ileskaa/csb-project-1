@@ -8,6 +8,10 @@
   {% load static %}
   <link rel="icon" type="image/png" href="{% static 'csbproject/favicon.ico' %}"/>
   <link rel="stylesheet" href="{% static 'brokenapp/style.css' %}">
+
+  <style>
+    {% block style %}{% endblock %}
+  </style>
 </head>
 <body>
   {% block body %}{% endblock %}

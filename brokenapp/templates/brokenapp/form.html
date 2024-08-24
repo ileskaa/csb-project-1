@@ -1,0 +1,27 @@
+{% extends "brokenapp/base.html" %}
+
+{% block style %}
+  body {
+    margin-top: 5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  form {
+    /* Form outline */
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+  }
+{% endblock %}
+{% block body %}
+  <form action="{% url 'brokenapp:query' %}" method="post" >
+    {% csrf_token %}
+    <div>This is a crappy form.</div><br>
+    <label>Query the Choice table:</label><br>
+    <input class="form-input" name="query" type="text">
+    <input type="submit" value="Submit">
+  <form>
+    {% if result %}<p><strong>{{ result }}</strong></p>{% endif %}
+{% endblock %}
