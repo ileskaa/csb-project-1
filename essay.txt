@@ -1,9 +1,7 @@
 LINK: https://github.com/ileskaa/csb-project-1
 To set up the project, please refer to the instructions in the repository's README.
-Please note that within this essay, the $ sign is used to mark commands that should be run in your terminal, and >>> means that the command is to be run in the django shell. These should not be included as part of the commands. 
 
-Now, to set up the database, run
-$ sqlite3 db.sqlite3 < dump.sql
+Note: within this essay, the $ sign is used to mark commands that should be run in your terminal, and >>> means that the command is to be run in the django shell. These should not be included as part of the commands. 
 
 
 FLAW 1: Broken Access Control
@@ -64,3 +62,10 @@ Therefore, to delete this issue, open brokenapp/urls.py and remove line 17.
 
 
 FLAW 5: Security Misconfiguration
+Having up to date software is important for the security of your application.
+This app currently uses an old version of Django that is no longer supported. Using outdated packages poses a threat since they might have security flaws that would have been patched in more recent releases.
+The problematic line can be found at:
+https://github.com/ileskaa/csb-project-1/blob/master/requirements.txt#L3
+
+To fix this issue, open requirements.txt and replace the current version of Django with version 5.0.8, or another recent and supported version. Then run
+$ pip install -r requirements.txt
