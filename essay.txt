@@ -51,6 +51,16 @@ The cause of this flaw can be found here:
 https://github.com/ileskaa/csb-project-1/blob/master/csbproject1/settings.py#L142
 Luckily, this is easy to fix. Open csbproject1/settings.py and simply remove line 142. Now if you go to http://localhost:8000/ and register with a different username, the password of that new user will be hashed. Test it out from the django shell, as we did earlier!
 
-FLAW 4:
 
-FLAW 5:
+FLAW 4: Injection
+Make sure the app is running on port 8000, and open http://localhost:8000/injection/. You are presented with a form that allows you to query the Choice table of this app. You can test it out by entering
+SELECT * FROM brokenapp_choice
+to the input field and submitting the form. The page will then display the list of possible to the question "What's new?". This is all fine and good, but since the table allows you to run SQL, you can actually enter
+DROP table brokenapp_choice
+and wooooops, the entire table just got deleted.
+This whole brokenapp/injection/ route is a big security hazard because the app should definitely not let a normal user run arbitrary SQL queries. Therefore this whole route should be deleted. The line to remove is the following:
+https://github.com/ileskaa/csb-project-1/blob/master/brokenapp/urls.py#L17
+Therefore, to delete this issue, open brokenapp/urls.py and remove line 17.
+
+
+FLAW 5: Security Misconfiguration
