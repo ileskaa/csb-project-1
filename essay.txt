@@ -1,6 +1,6 @@
 LINK: https://github.com/ileskaa/csb-project-1
 To set up the project, please refer to the instructions in the repository's README.
-Please note that the $ sign is used to mark commands that should be run in your terminal, and should not be included as part of the commands.
+Please note that within this essay, the $ sign is used to mark commands that should be run in your terminal, and >>> means that the command is to be run in the django shell. These should not be included as part of the commands. 
 
 Now, to set up the database, run
 $ sqlite3 db.sqlite3 < dump.sql
@@ -38,7 +38,18 @@ The cause of this flaw can be found at https://github.com/ileskaa/csb-project-1/
 
 
 FLAW 3: Cryptographic Failures
-The cryptography used to protect passwords is currently totally broken. In fact, the hashing is non-existent. This sucks. The cause of this flaw can be found here: 
+The cryptography used to protect passwords is currently totally broken. In fact, the hashing is non-existent. To the test this out, start the development server on port 8000, and open http://localhost:8000/. Click the register button, and enter a username and password of your choice. Then submit the form.
+Now, in a terminal, run
+$ python manage.py shell
+to open the django shell.
+From there, we want to retrieve the password corresponding to the username you used in the registration form. To do run
+>>> from django.contrib.auth.models import User
+>>> u = User.objects.get(username__exact=username)
+>>> u.password
+If you correctly passed your username to User.objects.get(), you should see your password displayed in plain text. No hashing whatsoever. This sucks because it leaves the passwords totally exposed in case of a breach.
+The cause of this flaw can be found here:
+https://github.com/ileskaa/csb-project-1/blob/master/csbproject1/settings.py#L142
+Luckily, this is easy to fix. Open csbproject1/settings.py and simply remove line 142. Now if you go to http://localhost:8000/ and register with a different username, the password of that new user will be hashed. Test it out from the django shell, as we did earlier!
 
 FLAW 4:
 
