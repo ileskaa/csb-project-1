@@ -1,4 +1,4 @@
-## Project setup
+## Project Setup
 
 If you are running this app for the first time, I recommend you start by creating a virtual environment in a directory of your choice. For example:
 ```bash
@@ -17,7 +17,7 @@ and install the dependencies using
 pip install -r requirements.txt
 ```
 
-Next, you can apply migrations via `python manage.py migrate`. Migrations are Django's way of applying the changes made to your models into the database schema.
+Next, set up the database with `sqlite3 db.sqlite3 < dump.sql`. Migrations are Django's way of applying the changes made to your models into the database schema.
 
 When you want to exit the virtual environment, use `deactivate`
 
