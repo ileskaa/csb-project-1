@@ -1,15 +1,19 @@
-{# Provide a link to the view with the url tag #}
-{# https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#url #}
-<form action="{% url 'brokenapp:vote' question.id %}" method="post">
-{# Template tag that allows the POST request to be accepted by the server #}
-{% csrf_token %}
-<fieldset>
-    <legend><h1>{{ question.question_text }}</h1></legend>
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-    {% for choice in question.choice_set.all %}
-        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-    {% endfor %}
-</fieldset>
-<input type="submit" value="Vote">
-</form>
+{% extends "brokenapp/base.html" %}
+
+{% block body %}
+    {# Provide a link to the view with the url tag #}
+    {# https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#url #}
+    <form action="{% url 'brokenapp:vote' question.id %}" method="post">
+    {# Template tag that allows the POST request to be accepted by the server #}
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>{{ question.question_text }}</h1></legend>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        {% for choice in question.choice_set.all %}
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+        {% endfor %}
+    </fieldset>
+    <input type="submit" value="Vote">
+    </form>
+{% endblock %}
