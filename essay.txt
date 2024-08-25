@@ -22,15 +22,20 @@ then enter a username of your choice. The email address prompt can be left empty
 
 
 FLAW 2: Cross-Site Request Forgery (CSRF)
+The cause of this flaw can be found at https://github.com/ileskaa/csb-project-1/blob/master/brokenapp/views.py#L60
+
 CSRF refers to an attack that forces an authenticated user to perform some action on the platform on which he is authenticated.
 
 One of the flaws of this app is that it doesn't block CSRF. To test this out, make sure the app is running on port 8000 of your machine, then open a page at
 http://localhost:8000/brokenapp/1/results/. There you should see vote counts for different answers. On a well-designed app, you should be able to alter these counts only by voting in the app. But here, a malicious actor could actually make you vote by making you click on a click. To test this out, take note of how many votes the answer "Just hacking" has. Then open another tab at https://ileskaa.github.io/csrf-demo/. This page presents you a link. If you click it, then go back to http://localhost:8000/brokenapp/1/results/, and refresh the page, you should see that the vote count for "Just hacking" increased by one. That was CSRF in action.
 
-The cause of this flaw can be found at https://github.com/ileskaa/csb-project-1/blob/master/brokenapp/views.py#L60 and thankfully, it is really easy to fix. Juste remove line 60 of brokenapp/views.py.
+Thankfully, this flaw is really easy to fix. Juste remove line 60 of brokenapp/views.py.
 
 
 FLAW 3: Cryptographic Failures
+The cause of this flaw can be found here:
+https://github.com/ileskaa/csb-project-1/blob/master/csbproject1/settings.py#L142
+
 The cryptography used to protect passwords is currently totally broken. In fact, the hashing is non-existent. To the test this out, make sure the development server is running on port 8000, and open http://localhost:8000/. Click the register button, and enter a username and password of your choice. Then submit the form.
 Now, in a terminal, run
 $ python manage.py shell
@@ -40,31 +45,33 @@ From there, we want to retrieve the password corresponding to the username you u
 >>> u = User.objects.get(username__exact='your_username')
 >>> u.password
 If you correctly passed your username to User.objects.get(), you should see your password displayed in plain text. No hashing whatsoever. This sucks, because it leaves the passwords totally exposed in case of a breach.
-The cause of this flaw can be found here:
-https://github.com/ileskaa/csb-project-1/blob/master/csbproject1/settings.py#L142
+
 Luckily, this is easy to fix. Open csbproject1/settings.py and simply remove line 142. Now if you go to http://localhost:8000/ and register with a different username, the password of that new user will be hashed. Test it out from the django shell, as we did earlier!
 
 
 FLAW 4: Injection
+Link to the flaw:
+https://github.com/ileskaa/csb-project-1/blob/master/brokenapp/urls.py#L17
+
 Make sure the app is running on port 8000, and open http://localhost:8000/brokenapp/injection/. You are presented with a form that allows you to query the Choice table of this app. You can test it out by entering
 SELECT * FROM brokenapp_choice
 to the input field and submitting the form. The page will then display the list of possible answers to the question "What's new?". This is all fine and good, but since the table allows you to run SQL, you can actually enter
 DROP table brokenapp_choice
 and wooooops, the entire table just got deleted. Now if you go to http://localhost:8000/brokenapp/1/, an you'll presented an error message since the whole table does not exist anymore.
-This whole brokenapp/injection/ route is a big security hazard because the app should definitely not let a normal user run arbitrary SQL queries. Therefore this whole route should be deleted. The line to remove is the following:
-https://github.com/ileskaa/csb-project-1/blob/master/brokenapp/urls.py#L17
+This whole brokenapp/injection/ route is a big security hazard because the app should definitely not let a normal user run arbitrary SQL queries. Therefore this whole route should be deleted.
 Therefore, to get rid this security issue, open brokenapp/urls.py and remove line 17.
 
 
 FLAW 5: Security Misconfiguration
+The problematic line can be found at:
+https://github.com/ileskaa/csb-project-1/blob/master/requirements.txt#L3
+
 Having up to date software is important for the security of your application.
 This app currently uses an old version of Django that is no longer supported. The list of supported versions are shown here:
 https://www.djangoproject.com/download/
 Using outdated packages poses a threat since they might have security flaws that would have been patched in more recent releases.
-The problematic line can be found at:
-https://github.com/ileskaa/csb-project-1/blob/master/requirements.txt#L3
-
 To fix this issue, open requirements.txt and replace the current version of Django with version 5.0.8, or another recent and supported version. Then run
 $ pip install -r requirements.txt
+
 
 Voilà ! Thank you for tagging along.
