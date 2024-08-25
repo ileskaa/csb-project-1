@@ -1,37 +1,31 @@
 ## Project Setup
 
+Start by cloning this repository, and `cd` into it.
+
 If you are running this app for the first time, I recommend you start by creating a virtual environment in a directory of your choice. For example:
 ```bash
 python -m venv ~/.virtualenvs/djangodev
 ```
-Where the `-m` option is used to execute a specific module.  
+where the `-m` option is used to execute a specific Python module.  
 If you do not yet have a `~/.virtualenvs` directory, just make sure to create one first.  
 
 Now, activate your virtual environment with
 ```bash
 source ~/.virtualenvs/djangodev/bin/activate
 ```
+If you put the virtual environment in another directory, just adjust the path accordingly.
 
-and install the dependencies using 
+When you want to exit the virtual environment, use `deactivate`
+
+You are now ready to install the dependencies of this project by running
 ```bash
 pip install -r requirements.txt
 ```
 
-Next, set up the database with `sqlite3 db.sqlite3 < dump.sql`. Migrations are Django's way of applying the changes made to your models into the database schema.
+Next, set up the database with `sqlite3 db.sqlite3 < dump.sql`.
 
-When you want to exit the virtual environment, use `deactivate`
+To run the development server: `python manage.py runserver`
 
-Run the development server: `python manage.py runserver`
-
-https://docs.djangoproject.com/en/5.0/intro/tutorial01/
-
-https://cybersecuritybase.mooc.fi/module-3.1
-
-## Directory Structure
-
-`manage.py` is a command-line utility that lets you interact with this Django project.
-
-The `csbproject1` directory is the actual Python package for the project. You will have to use its name to import anything inside it. E.g., `mysite.urls`
 
 ## OWASP
 
