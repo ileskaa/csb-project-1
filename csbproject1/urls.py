@@ -22,7 +22,7 @@ from . import views
 
 urlpatterns = [
     # https://docs.djangoproject.com/en/5.0/ref/urls/#path
-    path("", views.testview, name="test"),
+    path("", views.indexview, name="index"),
     path("register/", views.register, name="register"),
     path("signin/", views.signin, name="signin"),
     # include() allows referencing other URLconfs

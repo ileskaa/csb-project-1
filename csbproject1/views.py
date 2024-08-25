@@ -4,8 +4,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 
 
-def testview(request):
-    print(request.POST)
+def indexview(request):
     return render(
         request,
         "index.html",
@@ -19,7 +18,7 @@ def register(request):
     username = request.POST['username']
     password = request.POST['password']
     user = User.objects.create_user(username, password=password)
-    print('created user', user)
+    print('Created user', user)
     # https://docs.djangoproject.com/en/5.0/ref/request-response/#django.http.HttpResponseRedirect
     return HttpResponseRedirect("/brokenapp/")
 
@@ -38,7 +37,7 @@ def signin(request):
         print('user', user, 'is now authenticated')
         return HttpResponseRedirect("/brokenapp/")
     else:
-        print('failed to authenticate')
+        print('Failed to authenticate')
         # This must be fixed
         return render(
             request,
