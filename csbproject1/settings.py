@@ -138,11 +138,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # as described at:
 # https://docs.djangoproject.com/en/5.1/topics/auth/passwords/#how-django-stores-passwords
 PASSWORD_HASHERS = [
-    # Remove the next line:
-    "csbproject1.myhashers.CustomHasher",
-    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
-    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
-    "django.contrib.auth.hashers.Argon2PasswordHasher",
-    "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
-    "django.contrib.auth.hashers.ScryptPasswordHasher",
+    # FLAW 3 - remove the next line:
+    "csbproject1.hashers.CustomPasswordHasher",
+    # And uncomment one of the lines below
+    # "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+    # "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
+    # "django.contrib.auth.hashers.Argon2PasswordHasher",
+    # "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
+    # "django.contrib.auth.hashers.ScryptPasswordHasher",
 ]

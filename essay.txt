@@ -36,7 +36,7 @@ FLAW 3: Cryptographic Failures
 The cause of this flaw can be found here:
 https://github.com/ileskaa/csb-project-1/blob/master/csbproject1/settings.py#L142
 
-The cryptography used to protect passwords is currently totally broken. In fact, the hashing is non-existent. To the test this out, make sure the development server is running on port 8000, and open http://localhost:8000/. Click the register button, and enter a username and password of your choice. Then submit the form.
+The cryptography used to protect passwords is currently broken. In fact, the hashing is non-existent. To the test this out, make sure the development server is running on port 8000, and open http://localhost:8000/. Click the register button, and enter a username and password of your choice. Then submit the form.
 Now, in a terminal, run
 $ python manage.py shell
 to open the django shell.
@@ -44,9 +44,9 @@ From there, we want to retrieve the password corresponding to the username you u
 >>> from django.contrib.auth.models import User
 >>> u = User.objects.get(username__exact='your_username')
 >>> u.password
-If you correctly passed your username to User.objects.get(), you should see your password displayed in plain text. No hashing whatsoever. This sucks, because it leaves the passwords totally exposed in case of a breach.
+If you correctly passed your username to User.objects.get(), you should see your password displayed in plain text, preceded by "custom$$". No hashing whatsoever. This is pretty bad, because it leaves the passwords totally exposed in case of a breach.
 
-Luckily, this is easy to fix. Open csbproject1/settings.py and simply remove line 142. Now if you go to http://localhost:8000/ and register with a different username, the password of that new user will be hashed. Test it out from the django shell, as we did earlier!
+Now, here's how to to fix that. Open csbproject1/settings.py and simply remove line 142. After that, uncomment one or several of the hashers proposed below. Now if you go to http://localhost:8000/ and register with a different username, the password of that new user will be hashed. Test it out from the django shell, as we did earlier!
 
 
 FLAW 4: Injection
