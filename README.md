@@ -2,20 +2,18 @@
 
 Start by cloning this repository, and `cd` into it.
 
-If you are running this app for the first time, I recommend you start by creating a virtual environment in a directory of your choice. For example:
+If you are running this app for the first time, it is a good idea to first create a virtual environment. To do so, at the root of this project, run
 ```bash
-python -m venv ~/.virtualenvs/djangodev
+python -m venv djangovenv
 ```
 where the `-m` option is used to execute a specific Python module.  
-If you do not yet have a `~/.virtualenvs` directory, just make sure to create one first.  
 
 Now, activate your virtual environment with
 ```bash
-source ~/.virtualenvs/djangodev/bin/activate
+source djangovenv/bin/activate
 ```
-If you put the virtual environment in another directory, just adjust the path accordingly.
 
-When you want to exit the virtual environment, use `deactivate`
+Now, whenever you want to exit the virtual environment, run `deactivate`.
 
 You are now ready to install the dependencies of this project by running
 ```bash
@@ -24,7 +22,7 @@ pip install -r requirements.txt
 
 Next, set up the database with `sqlite3 db.sqlite3 < dump.sql`.
 
-To run the development server: `python manage.py runserver`
+You can now start the development server with `python manage.py runserver`, which by default will run the app on port 8000.
 
 
 ## OWASP
