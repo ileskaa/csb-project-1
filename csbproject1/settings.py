@@ -88,7 +88,7 @@ DATABASES = {
 }
 
 
-# Password validation
+# List of validators used to check the strength of a user's password.
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -138,8 +138,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # as described at:
 # https://docs.djangoproject.com/en/5.1/topics/auth/passwords/#how-django-stores-passwords
 PASSWORD_HASHERS = [
-    # Remove this horror:
-    "csbproject1.mymodule.FakeHasher",
+    # Remove the next line:
+    "csbproject1.myhashers.CustomHasher",
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
     "django.contrib.auth.hashers.Argon2PasswordHasher",
