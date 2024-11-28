@@ -40,3 +40,5 @@ The task was to include at leat 5 different flaws from the [OWASP top 10 list](h
 10. Server-side request forgery
 
 In addition to these 10 flaws, [cross-site request forgery](https://www.cloudflare.com/learning/security/threats/cross-site-request-forgery/) was also allowed.
+
+The OWASP list of 2021 was used for this exercise.
