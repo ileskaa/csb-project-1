@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block body %}
+  <p>Heyaaaaa!</p>
+  <p>
+    This project contains a simple polling application based on the
+    "Writing your first Django app" tutorial.
+  </p>
+  <p>Get started by clicking one of the buttons below.</p>
+  {# Specifying type as button prevents the default behaviour of submitting a form #}
+  <div class="button-wrapper">
+    <a href="/register/" class="no-decoration">
+      <button type="button">
+        Register
+      </button>
+    </a>
+
+    <a href="/signin/">
+      <button onclick="updateFormTitle('Sign In')" type="button">
+        Sign In
+      </button>
+    </a>
+  </div>
+
+  {# the action attribute defines the URL to which form data should be sent #}
+  <form id="start-form"
+    style="visibility:{{ visibility }}"
+    action="{{ action_path }}" method="post"
+  >
+    {% csrf_token %}
+    <h2 id="form-title">{{ form_title }}</h2>
+    <ul>
+      <li>
+        <label>Username:</label>
+        <input class="form-input" name="username" type="text">
+      </li>
+      <li>
+        <label>Password:</label>
+        <input class="form-input" id="pswd-input" name="password" type="password">
+      </li>
+    </ul>
+    <div class="show-pswd">
+      <input type="checkbox" onclick="showPassword()">Show Password 
+    </div>
+    {% if error_message %} <p><strong>{{ error_message }}</strong></p>{% endif %}
+    <input class="submit-btn" type="submit" value="Submit">
+  </form>
+{% endblock %}

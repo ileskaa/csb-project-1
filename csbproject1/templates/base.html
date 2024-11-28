@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <title>Index</title>
+
+  {# The "load static" tag is used to load the path to the static directory #}
+  {% load static %}
+  <link rel="icon" type="image/png" href="{% static 'csbproject/favicon.ico' %}"/>
+  <link rel="stylesheet" href="{% static 'csbproject/style.css' %}">
+
+  <script>
+    // can probably be removed
+    function updateFormTitle(title) {
+      const form_title = document.getElementById("form-title");
+      form_title.textContent = title
+      const form = document.getElementById("start-form") || null
+      if (form)
+        console.log('form action:', form.action)
+      console.log(title)
+      if (title === "Register")
+        form.setAttribute("action", "/register/")
+      else
+        form.action = "signin/"
+      console.log('form action:', form.action)
+      showForm()
+    }
+
+    function showForm() {
+      const form = document.getElementById('start-form')
+      form.style.visibility = "visible"
+      console.log('Wants to sign in')
+    }
+
+    function showPassword() {
+      const input = document.getElementById("pswd-input");
+      input.type = input.type === "password" ? "text" : "password";
+    }
+  </script>
+</head>
+
+<body>
+  {% block body %}{% endblock %}
+</body>
+</html>

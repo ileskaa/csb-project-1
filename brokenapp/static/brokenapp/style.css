@@ -1,3 +1,10 @@
 li a {
     color: green;
 }
+
+#logout {
+    float: right;
+    margin-right: 1rem;
+    font-size: 16px;
+    padding: 4px;
+}

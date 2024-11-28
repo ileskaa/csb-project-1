@@ -12,8 +12,23 @@
   <style>
     {% block style %}{% endblock %}
   </style>
+
+  <script>
+    function logOut() {
+      console.log('test')
+    }
+  </script>
 </head>
+
 <body>
+  {% if logout != "hide" %}
+  <form action="/logout/">
+    <button id="logout" type="submit">
+      Log out
+    </button>
+  </form>
+  {% endif %}
+
   {% block body %}{% endblock %}
 </body>
 </html>

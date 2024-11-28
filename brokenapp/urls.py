@@ -17,4 +17,5 @@ urlpatterns = [
     path("injection/", views.injection, name="injection"),
     # INJECTION DANGER:
     path("query/", views.query, name="query"),
+    path("unauthorized/", views.unauthorized, name="unauthorized")
 ]

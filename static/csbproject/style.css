@@ -19,6 +19,10 @@ button, .submit-btn {
   float: right;
 }
 
+.no-decoration {
+  text-decoration: none;
+}
+
 form {
   /* Form outline */
   padding: 1em;
