@@ -2,7 +2,9 @@ from django.urls import path
 
 from . import views
 
-# Namespacing
+# The application namespace can be set using the app_name variable
+
+# pylint: disable=invalid-name
 app_name = "brokenapp"
 urlpatterns = [
     # as_view() is required for class-based views
