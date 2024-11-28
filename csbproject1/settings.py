@@ -24,7 +24,7 @@ env.read_env(BASE_DIR / ".env")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-(eua&hqyk(n=92oc6aeqk)320)rk_d1=0a0xsuis9d(6kgo7dh"
-# FLAW 5: replace the line above with the line below and define the key in .env
+# FLAW 5: define the key in .env and replace the line above with the line below
 # SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!

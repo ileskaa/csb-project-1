@@ -63,15 +63,16 @@ Therefore, to get rid this security issue, open brokenapp/urls.py and remove lin
 
 
 FLAW 5: Security Misconfiguration
-The problematic line can be found at:
-https://github.com/ileskaa/csb-project-1/blob/master/requirements.txt#L3
+CWE-547: Use of Hard-coded, Security-relevant Constants
 
-Having up to date software is important for the security of your application.
-This app currently uses an old version of Django that is no longer supported. The list of supported versions are shown here:
-https://www.djangoproject.com/download/
-Using outdated packages poses a threat since they might have security flaws that would have been patched in more recent releases.
-To fix this issue, open requirements.txt and replace the current version of Django with version 5.0.8, or another recent and supported version. Then run
-$ pip install -r requirements.txt
+The problematic line can be found at:
+https://github.com/ileskaa/csb-project-1/blob/master/csbproject1/settings.py#L26
+
+Instead of using a hard-coded variable, you should pass the secret key using an environment variable. Therefore, start by creating a file named `.env` at the root of the cloned directory. Add your secret key to that file in the format
+```
+SECRET_KEY=your-secret-key
+```
+Then, in `csbproject1/settings.py`, uncomment line 28 to enable the SECRET_KEY variable to be set based on the environment variable of the same name. After that, be sure to remove line 26 so that the hard coded constant is n longer present.
 
 
 Voilà ! Thank you for tagging along.
