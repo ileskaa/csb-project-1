@@ -4,62 +4,55 @@ To set up the project, please refer to the instructions in the repository's READ
 Note: within this essay, the $ sign is used to mark commands that should be run in your terminal, and >>> means that the command is to be run in the django shell. These should not be included as part of the commands. 
 
 
-FLAW 1: Broken Access Control
-The admin site can currently easily be accessed by some unintended users. If you're running the app on the default port, you can access the admin site at http://localhost:8000/admin/. A superuser has been created with an unsafe username/password combination. As it stands, the admin page can be accessed by simply using "admin" as both username and password. Please try it out!
-We can probably agree that this is broken access control. Now to fix this issue, the first step is to delete this unsafe admin account. To do so, enter the django shell using
-$ python manage.py shell
-and then from the shell run the following commands:
->>> from django.contrib.auth.models import User
->>> User.objects.get(username="admin", is_superuser=True).delete()
+FLAW 1: Identification and Authentication Failures
+Common Weakness Enumeration (CWE) 521: Weak Password Requirements
 
-Now, to verify that the user has been deleted, run the following:
->>> User.objects.filter(is_superuser=True)
-If the returned QuerySet is empty, or if it at least doesn't contain any user named "admin", it means the broken superuser account was successfully deleted.
+The cause of the flaw is the function that starts here:
+https://github.com/ileskaa/csb-project-1/blob/master/csbproject1/views.py#L50
 
-Now, to create a new admin, exit the Django shell using ctrl+z, and then, at the root directory of this project, run
-$ python manage.py createsuperuser
-then enter a username of your choice. The email address prompt can be left empty. And when asked for a password, enter one that is at least 8 characters long. It should also be different from the username, and common passwords like "12345678" should not be used. After that, your new superuser will be created. And now, the admin site should be way harder to access by any undesired person.
+This app does not have any password requirements at the moment. A new user can register with a password consisting of a single character if he so wishes. To fix this security hazard, some password requirements are needed. A solution to this issue has been implemented in csbproject1/views.py, but is currently commented out. To activate password validity checks, uncomment lines 56-58 within csbproject1/views.py.
 
 
 FLAW 2: Cross-Site Request Forgery (CSRF)
-The cause of this flaw can be found at https://github.com/ileskaa/csb-project-1/blob/master/brokenapp/views.py#L60
+CWE-352: Cross-Site Request Forgery (CSRF)
 
-CSRF refers to an attack that forces an authenticated user to perform some action on the platform on which he is authenticated.
+The cause of this flaw can be found at https://github.com/ileskaa/csb-project-1/blob/master/brokenapp/views.py#L83
 
-One of the flaws of this app is that it doesn't block CSRF. To test this out, make sure the app is running on port 8000 of your machine, then open a page at
-http://localhost:8000/brokenapp/1/results/. There you should see vote counts for different answers. On a well-designed app, you should be able to alter these counts only by voting in the app. But here, a malicious actor could actually make you vote by making you click on a click. To test this out, take note of how many votes the answer "Just hacking" has. Then open another tab at https://ileskaa.github.io/csrf-demo/. This page presents you a link. If you click it, then go back to http://localhost:8000/brokenapp/1/results/, and refresh the page, you should see that the vote count for "Just hacking" increased by one. That was CSRF in action.
+CSRF refers to an attack that forces an authenticated user to perform some action on the platform on which he is authenticated, and one of the flaws of this app is that it currently does not block this type of attack. To test this out, make sure the app is running on port 8000 of your machine, then log in or register a new user if you don't already have one.
+After that, open http://localhost:8000/brokenapp/1/results/. There you should see vote counts for different answers. On a well-designed app, you should be able to alter these counts only by voting in the app. But here, a malicious actor could actually force a vote by making you click on a click. To test this out, take note of how many votes the answer "Just hacking" has. Then open another tab at https://ileskaa.github.io/csrf-demo/. This page presents you a link. If you click it, then go back to http://localhost:8000/brokenapp/1/results/, and refresh the page, you should see that the vote count for "Just hacking" increased by one. That was CSRF in action.
 
-Thankfully, this flaw is really easy to fix. Juste remove line 60 of brokenapp/views.py.
+To fix this, we must enable the currently disabled CSRF protection. To do so, remove line 83 of brokenapp/views.py.
 
 
 FLAW 3: Cryptographic Failures
+CWE-327: Use of a Broken or Risky Cryptographic Algorithm
 The cause of this flaw can be found here:
-https://github.com/ileskaa/csb-project-1/blob/master/csbproject1/settings.py#L142
+https://github.com/ileskaa/csb-project-1/blob/master/csbproject1/settings.py#L145
 
 The cryptography used to protect passwords is currently broken. In fact, the hashing is non-existent. To the test this out, make sure the development server is running on port 8000, and open http://localhost:8000/. Click the register button, and enter a username and password of your choice. Then submit the form.
 Now, in a terminal, run
 $ python manage.py shell
 to open the django shell.
-From there, we want to retrieve the password corresponding to the username you used in the registration form. To do run
+From there, we want to retrieve the password corresponding to the username you used in the registration form. To do so, run
 >>> from django.contrib.auth.models import User
 >>> u = User.objects.get(username__exact='your_username')
 >>> u.password
 If you correctly passed your username to User.objects.get(), you should see your password displayed in plain text, preceded by "custom$$". No hashing whatsoever. This is pretty bad, because it leaves the passwords totally exposed in case of a breach.
 
-Now, here's how to to fix that. Open csbproject1/settings.py and simply remove line 142. After that, uncomment one or several of the hashers proposed below. Now if you go to http://localhost:8000/ and register with a different username, the password of that new user will be hashed. Test it out from the django shell, as we did earlier!
+Now, here's how to to fix that. Open csbproject1/settings.py and remove line 145. After that, uncomment one or several of the hashers proposed below that. If several hashers are uncommented, the app will use the first one available, while the others will serve as fallbacks.
+Now if you go to http://localhost:8000/ and register with a different username, the password of that new user will be hashed. Test it out from the django shell, as we did earlier!
 
 
 FLAW 4: Injection
-Link to the flaw:
-https://github.com/ileskaa/csb-project-1/blob/master/brokenapp/urls.py#L17
+CWE-80: Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS)
 
-Make sure the app is running on port 8000, and open http://localhost:8000/brokenapp/injection/. You are presented with a form that allows you to query the Choice table of this app. You can test it out by entering
-SELECT * FROM brokenapp_choice
-to the input field and submitting the form. The page will then display the list of possible answers to the question "What's new?". This is all fine and good, but since the table allows you to run SQL, you can actually enter
-DROP table brokenapp_choice
-and wooooops, the entire table just got deleted. Now if you go to http://localhost:8000/brokenapp/1/, an you'll presented an error message since the whole table does not exist anymore.
-This whole brokenapp/injection/ route is a big security hazard because the app should definitely not let a normal user run arbitrary SQL queries. Therefore this whole route should be deleted.
-Therefore, to get rid this security issue, open brokenapp/urls.py and remove line 17.
+The cause of the flaw is the function defined here:
+https://github.com/ileskaa/csb-project-1/blob/master/brokenapp/views.py#L119
+
+Make sure the app is running on port 8000 and that you are logged in. Now open http://localhost:8000/brokenapp/message/ in your browser. You'll be presented with a form that allows you to send messages that will then be displayed on the web page. The issue is that the server does not sanitize the issue messages, which enables you to run scripts. You can test this out by pasting
+<script>alert("Just hacking")</script>
+into the input field.
+To prevent this type of injection, open the file brokenapp/views.py. Then uncomment line 137 and remove line 135. By using django's render function, all the inputs will be sanitized, which fixes the problem.
 
 
 FLAW 5: Security Misconfiguration
@@ -72,7 +65,7 @@ Instead of using a hard-coded variable, you should pass the secret key using an 
 ```
 SECRET_KEY=your-secret-key
 ```
-Then, in `csbproject1/settings.py`, uncomment line 28 to enable the SECRET_KEY variable to be set based on the environment variable of the same name. After that, be sure to remove line 26 so that the hard coded constant is n longer present.
+Then, in `csbproject1/settings.py`, uncomment line 28 to enable the SECRET_KEY variable to be set based on the environment variable of the same name. After that, be sure to remove line 26 so that the hard coded constant is no longer present.
 
 
 Voilà ! Thank you for tagging along.
