@@ -1,7 +1,11 @@
-LINK: https://github.com/ileskaa/csb-project-1
+This exercise is based on the OWASP top-10 list of 2021:
+https://owasp.org/Top10/
+
+
+Link to my github repository: https://github.com/ileskaa/csb-project-1
 To set up the project, please refer to the instructions in the repository's README.
 
-Note: within this essay, the $ sign is used to mark commands that should be run in your terminal, and >>> means that the command is to be run in the django shell. These should not be included as part of the commands. 
+Note: within this essay, the $ sign is used to mark commands that should be run in your terminal, and >>> means that the command is to be run in the Django shell. These should thus not be included as part of the commands. 
 
 
 FLAW 1: Identification and Authentication Failures
@@ -26,6 +30,7 @@ To fix this, we must enable the currently disabled CSRF protection. To do so, re
 
 FLAW 3: Cryptographic Failures
 CWE-327: Use of a Broken or Risky Cryptographic Algorithm
+
 The cause of this flaw can be found here:
 https://github.com/ileskaa/csb-project-1/blob/master/csbproject1/settings.py#L145
 
@@ -49,7 +54,7 @@ CWE-80: Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic
 The cause of the flaw is the function defined here:
 https://github.com/ileskaa/csb-project-1/blob/master/brokenapp/views.py#L119
 
-Make sure the app is running on port 8000 and that you are logged in. Now open http://localhost:8000/brokenapp/message/ in your browser. You'll be presented with a form that allows you to send messages that will then be displayed on the web page. The issue is that the server does not sanitize the issue messages, which enables you to run scripts. You can test this out by pasting
+Make sure the app is running on port 8000 and that you are logged in. Now open http://localhost:8000/brokenapp/message/ in your browser. You'll be presented with a form that allows you to send messages that will then be displayed on the web page. The issue is that the server does not sanitize the issued messages, which enables the user to run scripts. You can test this out by for example pasting
 <script>alert("Just hacking")</script>
 into the input field.
 To prevent this type of injection, open the file brokenapp/views.py. Then uncomment line 137 and remove line 135. By using django's render function, all the inputs will be sanitized, which fixes the problem.
