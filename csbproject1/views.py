@@ -12,7 +12,7 @@ def indexview(request):
     )
 
 
-def render_registration_page(request):
+def render_registration_page(request, error = ""):
     return render(
         request,
         "auth.html",
@@ -20,15 +20,42 @@ def render_registration_page(request):
             "visibility": "visible",
             "action_path": "/register/",
             "form_title": "Register",
+            "error_message": error
         },
     )
 
+
+def check_validity(password):
+    if len(password) < 8:
+        return False
+
+    lower = upper = digit = False
+
+    for character in password:
+        if character.islower():
+            lower = True
+
+        if character.isupper():
+            upper = True
+
+        if character.isdigit():
+            digit = True
+
+    if lower and upper and digit:
+        return True
+
+INVALID_PSWD = "The password must contain at lest 8 characters, " \
+    "including uppercase and lowercase letters, and digits"
 
 def register(request):
     if not request.POST:
         return render_registration_page(request)
     username = request.POST["username"]
     password = request.POST["password"]
+    # FLAW 1: uncomment the 3 lines below to enforce pswd requirements
+    # is_valid = check_validity(password)
+    # if not is_valid:
+    #     return render_registration_page(request, INVALID_PSWD)
     user = User.objects.create_user(username, password=password)
     request.session["username"] = username
     print("Created user", user)

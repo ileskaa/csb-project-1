@@ -78,3 +78,9 @@ button {
      between the labels and their text fields */
   margin-left: 0.5em;
 }
+.red {
+  color: red;
+}
+.mw-400 {
+  max-width: 400px;
+}

@@ -42,7 +42,7 @@
     <div class="show-pswd">
       <input type="checkbox" onclick="showPassword()">Show Password 
     </div>
-    {% if error_message %} <p><strong>{{ error_message }}</strong></p>{% endif %}
+    {% if error_message %} <p class="red mw-400"><strong>{{ error_message }}</strong></p>{% endif %}
     <input class="submit-btn" type="submit" value="Submit">
   </form>
 {% endblock %}
