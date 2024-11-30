@@ -20,9 +20,17 @@ You are now ready to install the dependencies of this project by running
 pip install -r requirements.txt
 ```
 
-Next, set up the database with `sqlite3 db.sqlite3 < dump.sql`.
+Next, set up the database with 
+```bash
+sqlite3 db.sqlite3 < dump.sql
+```
 
-You can now start the development server with `python manage.py runserver`, which by default will run the app on port 8000.
+You are now ready to start the development server by running
+```bash
+# You might need to replace python with python3, depending on your setup
+python manage.py runserver
+```
+which by default will run the app on port 8000.
 
 
 ## OWASP
