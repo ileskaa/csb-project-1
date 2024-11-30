@@ -1,0 +1,12 @@
+{% extends "brokenapp/base.html" %}
+
+{% block body %}
+<form action="{% url 'brokenapp:message' %}" method="post" >
+    {% csrf_token %}
+    <label>Submit a message!</label><br>
+    <input class="form-input" name="message" type="text">
+    <input type="submit" value="Submit">
+<form>
+<br>
+{{ message }}
+{% endblock %}

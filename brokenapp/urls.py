@@ -15,7 +15,7 @@ urlpatterns = [
     path("<int:pk>/results/", views.ResultsView.as_view(), name="results"),
     path("<int:question_id>/vote/", views.vote, name="vote"),
     path("injection/", views.injection, name="injection"),
-    # INJECTION DANGER:
+    path("message/", views.message, name="message"),
     path("query/", views.query, name="query"),
     path("unauthorized/", views.unauthorized, name="unauthorized")
 ]

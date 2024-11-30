@@ -1,5 +1,5 @@
 from django.db.models import F
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
@@ -81,7 +81,6 @@ class ResultsView(generic.DetailView):
 
 # Remove the next line to block CSRF
 @csrf_exempt
-# urls.py sends a keyword argument called question_id to this view
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
@@ -113,14 +112,33 @@ def vote(request, question_id):
 def injection(request):
     if "username" not in request.session:
         return HttpResponseRedirect("/brokenapp/unauthorized/")
-
     return render(request, "brokenapp/form.html")
+
+
+@csrf_exempt
+def message(request):
+    if "username" not in request.session:
+        return HttpResponseRedirect("/brokenapp/unauthorized/")
+
+    form = """<form action="/brokenapp/message/" method="post" >
+        <label>Submit a message!</label><br>
+        <input class="form-input" name="message" type="text">
+        <input type="submit" value="Submit">
+    <form><br>"""
+
+    posted_message = ""
+
+    if request.POST:
+        posted_message = request.POST["message"]
+        form += posted_message
+
+    return HttpResponse(form)
+    # Fix FLAW 4 by removing the line above and uncommenting the row below
+    # return render(request, "brokenapp/messages.html", {"message": posted_message})
 
 
 def query(request):
     posted_query = request.POST["query"]
-    # SELECT * FROM brokenapp_choice for ex.
-    # SELECT * FROM brokenapp_choice
     print(posted_query)
     try:
         result = []
